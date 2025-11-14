@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "levelName": "Training Ground",
+    "description": "Learn basic movement and timing against scouts.",
+    "backgroundMaterial": "Ocean",
+    "backgroundSpeed": 7
+  },
+  {
+    "id": 2,
+    "levelName": "Scout Patrol",
+    "description": "Tighter scout patterns sharpen fundamentals.",
+    "backgroundMaterial": "Ocean",
+    "backgroundSpeed": 7
+  },
+  {
+    "id": 3,
+    "levelName": "First Sortie",
+    "description": "Gunships join the fray—pick your targets.",
+    "backgroundMaterial": "Ocean",
+    "backgroundSpeed": 7
+  },
+  {
+    "id": 4,
+    "levelName": "Border Clash",
+    "description": "Mixed scouts & gunships with thicker pressure.",
+    "backgroundMaterial": "Ocean",
+    "backgroundSpeed": 7
+  },
+  {
+    "id": 5,
+    "levelName": "Hot Pursuit",
+    "description": "Escalating scouts & gunships—sustain longer chains.",
+    "backgroundMaterial": "Ocean",
+    "backgroundSpeed": 7
+  },
+  {
+    "id": 6,
+    "levelName": "Short Raid",
+    "description": "Interceptors arrive—track and cut off fast movers.",
+    "backgroundMaterial": "Ocean",
+    "backgroundSpeed": 7
+  },
+  {
+    "id": 7,
+    "levelName": "Armor Line",
+    "description": "Escalating formations—keep lanes under control.",
+    "backgroundMaterial": "Ocean",
+    "backgroundSpeed": 7
+  },
+  {
+    "id": 8,
+    "levelName": "Siege Run",
+    "description": "Sustained sieges with layered compositions.",
+    "backgroundMaterial": "Ocean",
+    "backgroundSpeed": 7
+  },
+  {
+    "id": 9,
+    "levelName": "Approach Vector",
+    "description": "Dense mixes test awareness and focus fire.",
+    "backgroundMaterial": "Ocean",
+    "backgroundSpeed": 7
+  },
+  {
+    "id": 10,
+    "levelName": "Final Push",
+    "description": "Final gauntlet: relentless waves of all types.",
+    "backgroundMaterial": "Ocean",
+    "backgroundSpeed": 7
+  }
+]
