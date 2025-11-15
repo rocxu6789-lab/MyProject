@@ -15,37 +15,31 @@ namespace Config
 public partial class Tables
 {
     /// <summary>
-    /// Player configuration data
+    /// 漫画关卡表
     /// </summary>
-    public PlayerConfig PlayerConfig {get; }
+    public MangaLevel MangaLevel {get; }
     /// <summary>
-    /// Buff system configuration
+    /// 漫画关卡-节点表
     /// </summary>
-    public Buffs Buffs {get; }
+    public MangaNode MangaNode {get; }
     /// <summary>
-    /// Level configuration data
+    /// 漫画关卡-节点-页表
     /// </summary>
-    public LevelData LevelData {get; }
-    /// <summary>
-    /// Background spawn configuration
-    /// </summary>
-    public BackgroundSpawnData BackgroundSpawnData {get; }
+    public MangaItem MangaItem {get; }
 
     public Tables(System.Func<string, JSONNode> loader)
     {
-        PlayerConfig = new PlayerConfig(loader("playerconfig"));
-        Buffs = new Buffs(loader("buffs"));
-        LevelData = new LevelData(loader("leveldata"));
-        BackgroundSpawnData = new BackgroundSpawnData(loader("backgroundspawndata"));
+        MangaLevel = new MangaLevel(loader("mangalevel"));
+        MangaNode = new MangaNode(loader("manganode"));
+        MangaItem = new MangaItem(loader("mangaitem"));
         ResolveRef();
     }
     
     private void ResolveRef()
     {
-        PlayerConfig.ResolveRef(this);
-        Buffs.ResolveRef(this);
-        LevelData.ResolveRef(this);
-        BackgroundSpawnData.ResolveRef(this);
+        MangaLevel.ResolveRef(this);
+        MangaNode.ResolveRef(this);
+        MangaItem.ResolveRef(this);
     }
 }
 

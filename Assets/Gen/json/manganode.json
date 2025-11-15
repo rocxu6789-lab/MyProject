@@ -1,0 +1,72 @@
+[
+  {
+    "ID": "1_1_1",
+    "LevelID": "1_1",
+    "Index": 1,
+    "Name": "角色1漫画1小节1",
+    "Detail": "角色1漫画1小节1描述",
+    "RecommendCardAttribute": [
+      1,
+      2
+    ],
+    "RecommendLevel": 10,
+    "ParagraphIcon": "Sprite/Icon1.png",
+    "TbRewardID": 1,
+    "MangaTicketNum": 1,
+    "PageRange": [
+      1,
+      20
+    ]
+  },
+  {
+    "ID": "1_1_2",
+    "LevelID": "1_1",
+    "Index": 2,
+    "Name": "角色1漫画1小节2",
+    "Detail": "角色1漫画1小节2描述",
+    "RecommendCardAttribute": [
+      1,
+      2
+    ],
+    "RecommendLevel": 15,
+    "ParagraphIcon": "Sprite/Icon2.png",
+    "TbRewardID": 2,
+    "MangaTicketNum": 1,
+    "PageRange": [
+      1,
+      10
+    ]
+  },
+  {
+    "ID": "1_2_1",
+    "LevelID": "1_2",
+    "Index": 1,
+    "Name": "角色2漫画1小节1",
+    "Detail": "角色2漫画1小节1描述",
+    "RecommendCardAttribute": [
+      1,
+      2
+    ],
+    "RecommendLevel": 20,
+    "ParagraphIcon": "Sprite/Icon1.png",
+    "TbRewardID": 1,
+    "MangaTicketNum": 1,
+    "PageRange": []
+  },
+  {
+    "ID": "1_2_2",
+    "LevelID": "1_2",
+    "Index": 2,
+    "Name": "角色2漫画2小节2",
+    "Detail": "角色2漫画2小节2描述",
+    "RecommendCardAttribute": [
+      1,
+      2
+    ],
+    "RecommendLevel": 10,
+    "ParagraphIcon": "Sprite/Icon2.png",
+    "TbRewardID": 2,
+    "MangaTicketNum": 1,
+    "PageRange": []
+  }
+]

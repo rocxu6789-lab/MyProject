@@ -1,0 +1,50 @@
+[
+  {
+    "ID": "1_1",
+    "Index": 1,
+    "RoleId": 1,
+    "Name": "角色1漫画副本1",
+    "Des": "角色1漫画副本1",
+    "PrefabPath": "WorldExplorationDungeoPrefab/副本1.prefab"
+  },
+  {
+    "ID": "1_2",
+    "Index": 2,
+    "RoleId": 1,
+    "Name": "角色1漫画副本2",
+    "Des": "角色1漫画副本2",
+    "PrefabPath": "WorldExplorationDungeoPrefab/副本1.prefab"
+  },
+  {
+    "ID": "2_1",
+    "Index": 1,
+    "RoleId": 2,
+    "Name": "角色2漫画副本1",
+    "Des": "角色2漫画副本1",
+    "PrefabPath": "WorldExplorationDungeoPrefab/副本1.prefab"
+  },
+  {
+    "ID": "2_2",
+    "Index": 2,
+    "RoleId": 2,
+    "Name": "角色2漫画副本2",
+    "Des": "角色2漫画副本2",
+    "PrefabPath": "WorldExplorationDungeoPrefab/副本1.prefab"
+  },
+  {
+    "ID": "3_1",
+    "Index": 1,
+    "RoleId": 3,
+    "Name": "角色3漫画副本1",
+    "Des": "角色3漫画副本1",
+    "PrefabPath": "WorldExplorationDungeoPrefab/副本1.prefab"
+  },
+  {
+    "ID": "3_2",
+    "Index": 2,
+    "RoleId": 3,
+    "Name": "角色3漫画副本2",
+    "Des": "角色3漫画副本2",
+    "PrefabPath": "WorldExplorationDungeoPrefab/副本1.prefab"
+  }
+]

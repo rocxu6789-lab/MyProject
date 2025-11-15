@@ -14,14 +14,14 @@ namespace Config.Enum
     public enum TriggerType
     {
         None = 0,
-        OnHit = 1,
-        OnCast = 2,
-        Onkill = 3,
-        OnDeath = 4,
-        OnDamaged = 5,
-        Periodic = 6,
-        OnApply = 7,
-        OnRemove = 8,
+        /// <summary>
+        /// 选项
+        /// </summary>
+        Option = 1,
+        /// <summary>
+        /// 战斗
+        /// </summary>
+        Battle = 2,
     }
 
 } 
