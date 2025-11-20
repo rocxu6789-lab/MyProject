@@ -56,5 +56,159 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "MyProject.sln"
+    "dotnet.defaultSolution": "MyProject.sln",
+    "dotnet.preferCSharpExtension": true,
+    
+    // 编辑器主题和颜色配置
+    "workbench.colorTheme": "Default Dark+",
+    
+    // 自定义语法高亮颜色
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": "comment",
+                "settings": {
+                    "foreground": "#6A9955",
+                    "fontStyle": "italic"
+                }
+            },
+            {
+                "scope": "comment.line",
+                "settings": {
+                    "foreground": "#6A9955"
+                }
+            },
+            {
+                "scope": "comment.block",
+                "settings": {
+                    "foreground": "#6A9955"
+                }
+            },
+            {
+                "scope": "entity.name.type",
+                "settings": {
+                    "foreground": "#4EC9B0"
+                }
+            },
+            {
+                "scope": "entity.name.function",
+                "settings": {
+                    "foreground": "#DCDCAA"
+                }
+            },
+            {
+                "scope": "variable.other.readwrite",
+                "settings": {
+                    "foreground": "#9CDCFE"
+                }
+            },
+            {
+                "scope": "variable.other.property",
+                "settings": {
+                    "foreground": "#9CDCFE"
+                }
+            },
+            {
+                "scope": "keyword",
+                "settings": {
+                    "foreground": "#569CD6"
+                }
+            },
+            {
+                "scope": "storage.type",
+                "settings": {
+                    "foreground": "#569CD6"
+                }
+            },
+            {
+                "scope": "storage.modifier",
+                "settings": {
+                    "foreground": "#569CD6"
+                }
+            },
+            {
+                "scope": "constant.numeric",
+                "settings": {
+                    "foreground": "#B5CEA8"
+                }
+            },
+            {
+                "scope": "constant.language",
+                "settings": {
+                    "foreground": "#569CD6"
+                }
+            },
+            {
+                "scope": "string",
+                "settings": {
+                    "foreground": "#CE9178"
+                }
+            }
+        ]
+    },
+    
+    // 语义高亮配置（针对 C#）
+    "editor.semanticHighlighting.enabled": true,
+    
+    // 自定义语义高亮颜色
+    "editor.semanticTokenColorCustomizations": {
+        "enabled": true,
+        "rules": {
+            "comment": {
+                "foreground": "#6A9955",
+                "fontStyle": "italic"
+            },
+            "class": {
+                "foreground": "#4EC9B0"
+            },
+            "interface": {
+                "foreground": "#4EC9B0"
+            },
+            "enum": {
+                "foreground": "#4EC9B0"
+            },
+            "struct": {
+                "foreground": "#4EC9B0"
+            },
+            "typeParameter": {
+                "foreground": "#4EC9B0"
+            },
+            "function": {
+                "foreground": "#DCDCAA"
+            },
+            "method": {
+                "foreground": "#DCDCAA"
+            },
+            "property": {
+                "foreground": "#9CDCFE"
+            },
+            "field": {
+                "foreground": "#9CDCFE"
+            },
+            "variable": {
+                "foreground": "#9CDCFE"
+            },
+            "parameter": {
+                "foreground": "#9CDCFE"
+            },
+            "namespace": {
+                "foreground": "#4EC9B0"
+            },
+            "keyword": {
+                "foreground": "#569CD6"
+            },
+            "string": {
+                "foreground": "#CE9178"
+            },
+            "number": {
+                "foreground": "#B5CEA8"
+            }
+        }
+    },
+    
+    // 引用数量颜色
+    "editor.linkedEditing": true,
+    
+    // 代码透镜（引用数量）配置
+    "editor.codeLens": true
 }

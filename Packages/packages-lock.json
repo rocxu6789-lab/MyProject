@@ -1,14 +1,5 @@
 {
   "dependencies": {
-    "com.boxqkrtm.ide.cursor": {
-      "version": "https://github.com/boxqkrtm/com.unity.ide.cursor.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.test-framework": "1.1.9"
-      },
-      "hash": "53e1baac3cde90c46934f82ee1d61802d2bd6651"
-    },
     "com.code-philosophy.luban": {
       "version": "1.1.1",
       "depth": 0,
@@ -50,6 +41,15 @@
         "com.unity.test-framework": "1.1.33",
         "com.unity.testtools.codecoverage": "1.2.6"
       }
+    },
+    "com.unity.ide.cursor": {
+      "version": "2.0.23",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.test-framework": "1.1.9"
+      },
+      "url": "https://package.openupm.com"
     },
     "com.unity.ide.rider": {
       "version": "3.0.36",
