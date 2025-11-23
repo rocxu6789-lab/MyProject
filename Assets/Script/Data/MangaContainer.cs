@@ -25,6 +25,7 @@ public class MangaContainer
     #endregion
 
     #region 初始化
+    public bool IsGuide = false;
     public string InitNodeId = "1_1_1";//初始节点id
     public void Init()
     {
@@ -45,7 +46,6 @@ public class MangaContainer
             _currNodeData = value;
             InitAllPageData();
         }
-
     }
     List<MangaNodeData> _mangaNodeDataList = new List<MangaNodeData>();
     void InitAllNodeData()
@@ -60,45 +60,42 @@ public class MangaContainer
     {
         return _mangaNodeDataList.Find(data => data.Config.ID == nodeId);
     }
-    //尝试跳转到下一个节点
-    public bool TryGoToNextNode()
+    public bool IsHaveNextNode(out MangaNodeData nodeData)
     {
         if (_currNodeData == null)
         {
-            Debug.LogError("当前节点数据为空");
+            nodeData = null;
             return false;
         }
         var index = _currNodeData.Config.Index;
         var nextNodeId = _currNodeData.Config.LevelID.GetNextId(index);
-        var nextNodeData = GetNodeDataByID(nextNodeId);
-        if (nextNodeData == null)
-        {
-            return false;
-        }
-        CurrNodeData = nextNodeData;
-        return true;
+        nodeData = GetNodeDataByID(nextNodeId);
+        return nodeData != null;
     }
-    //尝试跳转到上一个节点
-    public bool TryGoToPreNode()
+    public bool IsHavePreNode(out MangaNodeData nodeData)
     {
         if (_currNodeData == null)
         {
-            Debug.LogError("当前节点数据为空");
+            nodeData = null;
             return false;
         }
         var index = _currNodeData.Config.Index;
         var preNodeId = _currNodeData.Config.LevelID.GetPreId(index);
-        var preNodeData = GetNodeDataByID(preNodeId);
-        if (preNodeData == null)
-        {
-            return false;
-        }
-        CurrNodeData = preNodeData;
-        return true;
+        nodeData = GetNodeDataByID(preNodeId);
+        return nodeData != null;
+    }
+
+    public int GetConsumePower()
+    {
+        return CurrNodeData.Config.MangaTicketNum;
     }
     #endregion
 
     #region  漫画页面管理
+    /// <summary>
+    /// 选中的选项索引 这个变量可以todo到节点对象里面
+    /// </summary>
+    public int SelectOptionIndex { get; set; } = -1;
     public MangaPageData CurPageData { get; set; }
     List<MangaPageData> _mangaPageDataList = new();
     void InitAllPageData()
@@ -123,6 +120,7 @@ public class MangaContainer
 
 }
 
+
 public class MangaNodeData
 {
     public Table_MangaNode Config { get; private set; }
@@ -141,5 +139,51 @@ public class MangaPageData
     public MangaPageData(Table_MangaPage config)
     {
         Config = config;
+    }
+    public bool IsOption()
+    {
+        return Config.TriggerType == (int)TriggerType.Option;
+    }
+    public string GetOptionName(int index)
+    {
+        if (index < 0 || index >= Config.Option.Count)
+        {
+            return "";
+        }
+        return Config.Option[index];
+    }
+    public int GetOptionSkip(int index)
+    {
+        if (index < 0 || index >= Config.OptionSkip.Count)
+        {
+            return 0;
+        }
+        return Config.OptionSkip[index];
+    }
+
+    public int GetOptionEnd()
+    {
+        return Config.OptionEnd;
+    }
+    public List<int> GetOptionBackList()
+    {
+        return Config.OptionBack;
+    }
+
+    public bool IsBattle()
+    {
+        return Config.TriggerType == (int)TriggerType.Battle;
+    }
+    public int GetBattleId()
+    {
+        return Config.BattleId;
+    }
+    public bool IsEnd()
+    {
+        return Config.TriggerType == (int)TriggerType.End;
+    }
+    public string GetEndSkip()
+    {
+        return Config.EndSkip;
     }
 }

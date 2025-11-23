@@ -72,7 +72,7 @@ public sealed partial class Table_MangaNode : Luban.BeanBase
     /// </summary>
     public readonly int TbRewardID;
     /// <summary>
-    /// 消耗漫画卡数量
+    /// 消耗体力数量
     /// </summary>
     public readonly int MangaTicketNum;
     /// <summary>

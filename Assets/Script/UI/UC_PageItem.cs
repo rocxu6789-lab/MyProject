@@ -1,0 +1,202 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Config;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UC_PageItem : MonoBehaviour
+{
+    [Header("图片")]
+    public RawImage img;
+    [Header("选项")]
+    public GameObject optionGo;
+    public Button optionBtn1;
+    public TextMeshProUGUI optionTxt1;
+    public Button optionBtn2;
+    public TextMeshProUGUI optionTxt2;
+    public GameObject optionTipsGo2;
+    [Header("战斗")]
+    public GameObject battleGo;
+    public Button battleBtn;
+    public TextMeshProUGUI battleIdTxt;
+    public TextMeshProUGUI battlePowerTxt;
+    [Header("结束尾页")]
+    public GameObject endGo;
+    public Animation endAni1;
+    public Transform endParent;
+    public GameObject butterflyGo;
+    public Transform startPos;
+    public Transform endPos;
+    [Header("结束尾条提示")]
+    public GameObject endTipsGo1;
+    public GameObject endTipsGo2;
+
+    MangaPageData _PageData;
+    bool isShowEnd = false;
+    bool isShowOption = false;
+    bool isShowBattle = false;
+    Action<int> onOption1Click;
+    Action<int> onOption2Click;
+    Action battleComplete;
+    void Start()
+    {
+    }
+
+    public void SetPageInfo(int typeIndex, MangaPageData pageData,
+     Action<int> onOption1Click,
+      Action<int> onOption2Click,
+      Action battleComplete)
+    {
+        _PageData = pageData;
+        this.onOption1Click = onOption1Click;
+        this.onOption2Click = onOption2Click;
+        this.battleComplete = battleComplete;
+        var isShow = _PageData != null;
+        gameObject.SetActive(isShow);
+        if (isShow)
+        {
+            ShowTexture();
+            if (typeIndex == 0)
+            {
+                ShowOption();
+                ShowBattle();
+                ShowEnd();
+            }
+            else
+                this.StopAllCoroutines();
+        }
+        else
+            this.StopAllCoroutines();
+    }
+
+    void ShowEnd()
+    {
+        isShowEnd = _PageData.IsEnd();
+        endGo.SetActive(isShowEnd);
+        if (isShowEnd)
+        {
+            endAni1.Stop();
+            endAni1.Play();
+            butterflyGo.SetActive(true);
+            endParent.gameObject.SetActive(false);
+            this.StopAllCoroutines();
+            StartCoroutine(LocalPositionLerp(butterflyGo.transform, startPos.localPosition, endPos.localPosition, 2f, () =>
+            {
+                butterflyGo.SetActive(false);
+                endParent.gameObject.SetActive(true);
+                Debug.Log("蝴蝶飞完成");
+                var endSkip = _PageData.GetEndSkip();
+                ResourcesManager.Instance.LoadGameObject(endSkip, (GameObject asset) =>
+                {
+                    if (asset == null)
+                    {
+                        Debug.LogError($"EndSkip prefab is null: {endSkip}");
+                        return;
+                    }
+                    var go = GameObject.Instantiate(asset);
+                    ResourcesManager.Instance.SetParent(go, endParent);
+                });
+            }));
+
+            if (MangaContainer.Instance.IsHaveNextNode(out MangaNodeData nodeData))
+            {
+                endTipsGo1.SetActive(true);
+                endTipsGo2.SetActive(false);
+            }
+            else
+            {
+                endTipsGo1.SetActive(false);
+                endTipsGo2.SetActive(true);
+            }
+        }
+        else
+        {
+            this.StopAllCoroutines();
+            endAni1.Stop();
+        }
+    }
+
+    void ShowBattle()
+    {
+        isShowBattle = _PageData.IsBattle();
+        battleGo.SetActive(isShowBattle);
+        if (isShowBattle)
+        {
+            int battleId = _PageData.GetBattleId();
+            battleIdTxt.text = $"战斗ID: {battleId}";
+            battlePowerTxt.text = $"体力: {PlayerManager.Instance.GetPowerString(MangaContainer.Instance.GetConsumePower())}";
+            if (PlayerManager.Instance.IsEnoughPower(battleId))
+            {
+                battleBtn.interactable = true;
+                Debug.Log("体力足够,开始战斗");
+                battleBtn.onClick.RemoveAllListeners();
+                battleBtn.onClick.AddListener(() => battleComplete?.Invoke());
+            }
+            else
+            {
+                battleBtn.interactable = false;
+                Debug.Log("体力不足,无法战斗");
+                battleBtn.onClick.RemoveAllListeners();
+            }
+        }
+        else
+            battleBtn.onClick.RemoveAllListeners();
+    }
+
+    void ShowOption()
+    {
+        isShowOption = _PageData.IsOption();
+        optionGo.SetActive(isShowOption);
+        if (isShowOption)
+        {
+            optionTxt1.text = _PageData.GetOptionName(0);
+            optionTxt2.text = _PageData.GetOptionName(1);
+            var index = MangaContainer.Instance.SelectOptionIndex;
+            optionTipsGo2.SetActive(index != -1);
+            optionBtn1.interactable = index == -1;
+            optionBtn2.interactable = index == -1;
+            optionBtn1.onClick.RemoveAllListeners();
+            optionBtn2.onClick.RemoveAllListeners();
+            optionBtn1.onClick.AddListener(() =>
+            {
+                MangaContainer.Instance.SelectOptionIndex = 0;
+                onOption1Click?.Invoke(_PageData.GetOptionSkip(0));
+            });
+            optionBtn2.onClick.AddListener(() =>
+            {
+                MangaContainer.Instance.SelectOptionIndex = 1;
+                onOption2Click?.Invoke(_PageData.GetOptionSkip(1));
+            });
+        }
+        else
+        {
+            optionBtn1.onClick.RemoveAllListeners();
+            optionBtn2.onClick.RemoveAllListeners();
+        }
+    }
+    void ShowTexture()
+    {
+        ResourcesManager.Instance.LoadTexture($"{_PageData.Config.Texture}", (Texture texture) =>
+        {
+            img.texture = texture;
+        });
+
+    }
+
+    IEnumerator LocalPositionLerp(Transform trans, Vector3 start, Vector3 end, float duration, Action onComplete)
+    {
+        trans.localPosition = start;
+        float startTime = Time.time;
+        float t = (Time.time - startTime) / duration;
+        while (t <= 1)
+        {
+            t = Mathf.Clamp((Time.time - startTime) / duration, 0, 2);
+            trans.localPosition = Vector3.LerpUnclamped(start, end, t);
+            yield return null;
+        }
+        trans.localPosition = end;
+        onComplete?.Invoke();
+    }
+}

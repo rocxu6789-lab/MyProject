@@ -21,10 +21,12 @@ public sealed partial class Table_MangaPage : Luban.BeanBase
         { if(!_buf["NodeId"].IsString) { throw new SerializationException(); }  NodeId = _buf["NodeId"]; }
         { if(!_buf["Index"].IsNumber) { throw new SerializationException(); }  Index = _buf["Index"]; }
         { if(!_buf["Texture"].IsString) { throw new SerializationException(); }  Texture = _buf["Texture"]; }
-        { if(!_buf["End"].IsNumber) { throw new SerializationException(); }  End = _buf["End"]; }
         { if(!_buf["TriggerType"].IsNumber) { throw new SerializationException(); }  TriggerType = _buf["TriggerType"]; }
         { var __json0 = _buf["Option"]; if(!__json0.IsArray) { throw new SerializationException(); } Option = new System.Collections.Generic.List<string>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { string __v0;  { if(!__e0.IsString) { throw new SerializationException(); }  __v0 = __e0; }  Option.Add(__v0); }   }
-        { var __json0 = _buf["Next"]; if(!__json0.IsArray) { throw new SerializationException(); } Next = new System.Collections.Generic.List<int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { int __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  Next.Add(__v0); }   }
+        { var __json0 = _buf["OptionSkip"]; if(!__json0.IsArray) { throw new SerializationException(); } OptionSkip = new System.Collections.Generic.List<int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { int __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  OptionSkip.Add(__v0); }   }
+        { if(!_buf["OptionEnd"].IsNumber) { throw new SerializationException(); }  OptionEnd = _buf["OptionEnd"]; }
+        { var __json0 = _buf["OptionBack"]; if(!__json0.IsArray) { throw new SerializationException(); } OptionBack = new System.Collections.Generic.List<int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { int __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  OptionBack.Add(__v0); }   }
+        { if(!_buf["EndSkip"].IsString) { throw new SerializationException(); }  EndSkip = _buf["EndSkip"]; }
         { if(!_buf["BattleId"].IsNumber) { throw new SerializationException(); }  BattleId = _buf["BattleId"]; }
         { if(!_buf["TbRewardID"].IsNumber) { throw new SerializationException(); }  TbRewardID = _buf["TbRewardID"]; }
     }
@@ -51,21 +53,29 @@ public sealed partial class Table_MangaPage : Luban.BeanBase
     /// </summary>
     public readonly string Texture;
     /// <summary>
-    /// 结束:1
-    /// </summary>
-    public readonly int End;
-    /// <summary>
-    /// 事件类型<br/>(1选项,2战斗)
+    /// 事件类型<br/>(1结束 2选项 3战斗)
     /// </summary>
     public readonly int TriggerType;
     /// <summary>
-    /// 选项
+    /// 选项文本
     /// </summary>
     public readonly System.Collections.Generic.List<string> Option;
     /// <summary>
-    /// 下一步
+    /// 选项跳转
     /// </summary>
-    public readonly System.Collections.Generic.List<int> Next;
+    public readonly System.Collections.Generic.List<int> OptionSkip;
+    /// <summary>
+    /// 选项结束
+    /// </summary>
+    public readonly int OptionEnd;
+    /// <summary>
+    /// 选项回溯
+    /// </summary>
+    public readonly System.Collections.Generic.List<int> OptionBack;
+    /// <summary>
+    /// 结束跳转图标<br/>1洛基<br/>2小狐狸
+    /// </summary>
+    public readonly string EndSkip;
     /// <summary>
     /// 战斗ID
     /// </summary>
@@ -89,10 +99,12 @@ public sealed partial class Table_MangaPage : Luban.BeanBase
         + "NodeId:" + NodeId + ","
         + "Index:" + Index + ","
         + "Texture:" + Texture + ","
-        + "End:" + End + ","
         + "TriggerType:" + TriggerType + ","
         + "Option:" + Luban.StringUtil.CollectionToString(Option) + ","
-        + "Next:" + Luban.StringUtil.CollectionToString(Next) + ","
+        + "OptionSkip:" + Luban.StringUtil.CollectionToString(OptionSkip) + ","
+        + "OptionEnd:" + OptionEnd + ","
+        + "OptionBack:" + Luban.StringUtil.CollectionToString(OptionBack) + ","
+        + "EndSkip:" + EndSkip + ","
         + "BattleId:" + BattleId + ","
         + "TbRewardID:" + TbRewardID + ","
         + "}";

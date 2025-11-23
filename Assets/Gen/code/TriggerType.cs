@@ -9,19 +9,23 @@
 
 
 
-namespace Config.Enum
+namespace Config
 { 
     public enum TriggerType
     {
         None = 0,
         /// <summary>
+        /// 结束
+        /// </summary>
+        End = 1,
+        /// <summary>
         /// 选项
         /// </summary>
-        Option = 1,
+        Option = 2,
         /// <summary>
         /// 战斗
         /// </summary>
-        Battle = 2,
+        Battle = 3,
     }
 
 } 

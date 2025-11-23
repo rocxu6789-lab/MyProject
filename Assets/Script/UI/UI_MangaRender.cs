@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,27 +24,49 @@ public class UI_Manga : MonoBehaviour
         sld.onValueChanged.AddListener(OnSliderValueChanged);
     }
     MangaNodeData CurrNodeData;
+    int curIndex = 0;
     void Start()
     {
         sld.wholeNumbers = true;
-        InitPageInfo();
+        InitNodeInfo();
     }
-    void InitPageInfo()
+    void InitNodeInfo()
     {
         CurrNodeData = MangaContainer.Instance.CurrNodeData;
+        MangaContainer.Instance.SelectOptionIndex = -1;
         mangaPages.SetPageRange(CurrNodeData.StartIndex, CurrNodeData.EndIndex);
         sld.minValue = CurrNodeData.StartIndex;
         sld.maxValue = CurrNodeData.EndIndex;
+        sld.value = CurrNodeData.StartIndex;
+        curIndex = -1;
+        var consumePower = MangaContainer.Instance.GetConsumePower();
+        PlayerManager.Instance.UsePower(consumePower);
+        Debug.Log($"切换节点: {CurrNodeData.Config.Name} 消耗体力: {consumePower} 当前体力: {PlayerManager.Instance.GetPower()}");
     }
     void OnSliderValueChanged(float value)
     {
         Debug.Log("OnSliderValueChanged: " + value);
-        mangaPages.ShowPage((int)value, (index) =>
+        var intValue = (int)value;
+        if (intValue == curIndex) { return; }
+
+        mangaPages.ShowPage(intValue, (index) =>
         {
+            curIndex = index;
+            //界面展示完成回调
+            Debug.Log("界面展示完成回调: " + index);
             sld.value = index;
             proTxt.text = $"{index}/{CurrNodeData.EndIndex}";
-            infoTxt.text = $"第{index}页";
+            infoTxt.text = $"{CurrNodeData.Config.Name} \n 第{index}页";
+        }, () =>
+        {
+            Debug.Log("去上一节点");
+            OnPreBtnClick();
+        }, () =>
+        {
+            Debug.Log("去下一节点");
+            OnNextBtnClick();
         });
+
     }
 
     void OnClearScreenBtnClick()
@@ -57,9 +77,10 @@ public class UI_Manga : MonoBehaviour
     void OnPreBtnClick()
     {
         Debug.Log("OnPreBtnClick");
-        if (MangaContainer.Instance.TryGoToPreNode())
+        if (MangaContainer.Instance.IsHavePreNode(out MangaNodeData nodeData))
         {
-            InitPageInfo();
+            MangaContainer.Instance.CurrNodeData = nodeData;
+            InitNodeInfo();
             OnSliderValueChanged(CurrNodeData.StartIndex);
         }
         else
@@ -70,18 +91,20 @@ public class UI_Manga : MonoBehaviour
     void OnNextBtnClick()
     {
         Debug.Log("OnNextBtnClick");
-        if (MangaContainer.Instance.TryGoToNextNode())
+        if (MangaContainer.Instance.IsHaveNextNode(out MangaNodeData nodeData))
         {
-            InitPageInfo();
+            MangaContainer.Instance.CurrNodeData = nodeData;
+            InitNodeInfo();
             OnSliderValueChanged(CurrNodeData.StartIndex);
         }
         else
-        { 
+        {
             Debug.LogError("下一节点数据为空");
         }
     }
     void OnCloseBtnClick()
     {
+        MangaContainer.Instance.SelectOptionIndex = -1;
         Destroy(gameObject);
     }
 }

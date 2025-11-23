@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Enter : MonoBehaviour
 {
     public Button enterBtn;
+    public Toggle toggle;
     public Transform parent;
     void Awake()
     {
@@ -16,6 +17,13 @@ public class Enter : MonoBehaviour
     void Start()
     {
         enterBtn.onClick.AddListener(OnEnterBtnClick);
+        toggle.onValueChanged.AddListener(OnToggleValueChanged);
+    }
+
+    void OnToggleValueChanged(bool isOn)
+    {
+        Debug.Log("OnToggleValueChanged: " + isOn);
+        MangaContainer.Instance.IsGuide = isOn;
     }
 
     void OnEnterBtnClick()

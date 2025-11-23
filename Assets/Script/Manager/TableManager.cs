@@ -12,12 +12,16 @@ public static class TableManager
         _tables = new Tables(path => JSONNode.Parse(File.ReadAllText(Path.Combine(Application.dataPath, "Gen/json", path + ".json"))));
     }
 
-    public static string GetNextId(this string ID, int index)
+    public static string GetPageId(this string nodeId, int index)
     {
-        return ID + "_" + (index + 1);
+        return $"{nodeId}_{index}";
     }
     public static string GetPreId(this string ID, int index)
     {
-        return ID + "_" + (index - 1);
+        return GetPageId(ID, index - 1);
+    }
+    public static string GetNextId(this string ID, int index)
+    {
+        return GetPageId(ID, index + 1);
     }
 }

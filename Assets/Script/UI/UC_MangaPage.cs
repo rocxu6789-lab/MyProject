@@ -11,9 +11,9 @@ using System;
 /// </summary>
 public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public PageItem preItem;
-    public PageItem currentItem;
-    public PageItem nextItem;
+    public UC_PageItem preItem;
+    public UC_PageItem currentItem;
+    public UC_PageItem nextItem;
 
     [Header("翻页设置")]
     [Tooltip("翻页阈值（屏幕宽度的比例，默认0.33表示1/3）")]
@@ -43,11 +43,15 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     private Vector2 prevPageInitialPos;
     private Vector2 nextPageInitialPos;
 
+    private bool _isBlockDrag = false;
     // 当前页面索引
     private int curIndex;
     private int startIndex;
     private int endIndex;
     private Action<int> onComplete;
+    private Action onPreNode;
+    private Action onNextNode;
+    MangaPageData _CurPageData;
     void Awake()
     {
         screenWidth = Screen.width;
@@ -55,10 +59,12 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         currentPageInitialPos = curRect.anchoredPosition;
 
         prevRect = preItem.GetComponent<RectTransform>();
+        prevRect.anchoredPosition = new Vector2(-screenWidth, 0);
         prevPageInitialPos = prevRect.anchoredPosition;
         preItem.gameObject.SetActive(false);
 
         nextRect = nextItem.GetComponent<RectTransform>();
+        nextRect.anchoredPosition = new Vector2(screenWidth, 0);
         nextPageInitialPos = nextRect.anchoredPosition;
         nextItem.gameObject.SetActive(false);
     }
@@ -68,36 +74,57 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         this.startIndex = startIndex;
         this.endIndex = endIndex;
     }
-    public void ShowPage(int index, Action<int> onComplete)
+    public void ShowPage(int index, Action<int> onComplete, Action onPreNode, Action onNextNode)
     {
         this.onComplete = onComplete;
+        this.onPreNode = onPreNode;
+        this.onNextNode = onNextNode;
         DoShowPage(index);
     }
 
     void DoShowPage(int index)
     {
-        if (index >= startIndex && index <= endIndex)
+        if (startIndex <= index && index <= endIndex)
         {
-            index = Mathf.Clamp(index, 0, endIndex);
             curIndex = index;
             Debug.Log($"显示页面，索引: {curIndex}");
-
-            // 显示当前页
-            currentItem.ShowTexture(curIndex);
-            currentItem.gameObject.SetActive(true);
-
-            // 显示上一页
-            var preIndex = curIndex - 1;
-            var isShow = preIndex >= startIndex && preIndex <= endIndex;
-            preItem.gameObject.SetActive(isShow);
-            if (isShow) preItem.ShowTexture(preIndex);
-
-            // 显示下一页
-            var nextIndex = curIndex + 1;
-            isShow = nextIndex >= startIndex && nextIndex <= endIndex;
-            nextItem.gameObject.SetActive(isShow);
-            if (isShow) nextItem.ShowTexture(nextIndex);
-
+            string nodeId = MangaContainer.Instance.CurrNodeData.Config.ID;
+            {
+                // 显示当前页
+                string pageId = nodeId.GetPageId(curIndex);
+                _CurPageData = MangaContainer.Instance.GetPageDataByID(pageId);
+                bool isOption = _CurPageData.IsOption(); // 如果当前页是选项页，则禁止拖拽
+                bool isBattle = _CurPageData.IsBattle();
+                _isBlockDrag = (isOption || isBattle) && MangaContainer.Instance.SelectOptionIndex == -1;
+                currentItem.SetPageInfo(0, _CurPageData,
+                (nextIndex) =>
+                {
+                    Debug.Log("选项1回调: " + nextIndex);
+                    DoShowPage(nextIndex);
+                },
+                (nextIndex) =>
+                {
+                    Debug.Log("选项2回调: " + nextIndex);
+                    DoShowPage(nextIndex);
+                },
+                () =>
+                {
+                    Debug.Log("战斗完成");
+                    DoShowPage(curIndex + 1);
+                });
+            }
+            {
+                // 显示上一页
+                string pageId = nodeId.GetPreId(curIndex);
+                MangaPageData pageData = MangaContainer.Instance.GetPageDataByID(pageId);
+                preItem.SetPageInfo(-1, pageData, null, null, null);
+            }
+            {
+                // 显示下一页
+                string pageId = nodeId.GetNextId(curIndex);
+                MangaPageData pageData = MangaContainer.Instance.GetPageDataByID(pageId);
+                nextItem.SetPageInfo(1, pageData, null, null, null);
+            }
             // 重置位置
             ResetPagePositions();
             // 回调
@@ -105,7 +132,41 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         }
         else
         {
-            Debug.LogError($"页面索引超出范围: {index}");
+            Debug.Log($"页面索引超出当前节点范围: {index} startIndex: {startIndex} endIndex: {endIndex}，尝试去上一节点或下一节点");
+            if (MangaContainer.Instance.IsGuide)
+            {
+                Debug.Log("引导模式，回弹到当前页");
+                StartCoroutine(SnapBackToCurrentPage());
+                return;
+            }
+            //去上一节点
+            if (index < startIndex)
+            {
+                if (MangaContainer.Instance.IsHavePreNode(out MangaNodeData nodeData))
+                {
+                    onPreNode?.Invoke();
+                }
+                else
+                {
+                    StartCoroutine(SnapBackToCurrentPage());
+                }
+            }
+            //去下一节点
+            else if (index > endIndex)
+            {
+                if (MangaContainer.Instance.IsHaveNextNode(out MangaNodeData nodeData))
+                {
+                    onNextNode?.Invoke();
+                }
+                else
+                {
+                    StartCoroutine(SnapBackToCurrentPage());
+                }
+            }
+            else
+            {
+                Debug.LogError($"页面索引超出范围: {index}");
+            }
         }
     }
 
@@ -125,6 +186,7 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     /// </summary>
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (_isBlockDrag) return;
         if (isAnimating) return;
 
         isDragging = true;
@@ -137,6 +199,7 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     /// </summary>
     public void OnDrag(PointerEventData eventData)
     {
+        if (_isBlockDrag) return;
         if (!isDragging || isAnimating) return;
 
         dragCurPos = eventData.position;
@@ -154,6 +217,7 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     /// </summary>
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (_isBlockDrag) return;
         if (!isDragging) return;
 
         isDragging = false;
@@ -214,13 +278,13 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     /// </summary>
     private void GoToPreviousPage()
     {
-        if (curIndex <= startIndex)
-        {
-            // 已经是第一页，回弹
-            StartCoroutine(SnapBackToCurrentPage());
-            return;
-        }
-        StartCoroutine(SwipeToPage(curIndex - 1));
+        // if (curIndex <= startIndex)
+        // {
+        //     // 已经是第一页，回弹
+        //     StartCoroutine(SnapBackToCurrentPage());
+        //     return;
+        // }
+        StartCoroutine(SwipeToPage(-1));
     }
 
     /// <summary>
@@ -228,19 +292,19 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     /// </summary>
     private void GoToNextPage()
     {
-        if (curIndex >= endIndex)
-        {
-            // 已经是最后一页，回弹
-            StartCoroutine(SnapBackToCurrentPage());
-            return;
-        }
-        StartCoroutine(SwipeToPage(curIndex + 1));
+        // if (curIndex >= endIndex)
+        // {
+        //     // 已经是最后一页，回弹
+        //     StartCoroutine(SnapBackToCurrentPage());
+        //     return;
+        // }
+        StartCoroutine(SwipeToPage(1));
     }
 
     /// <summary>
     /// 滑动到指定页面
     /// </summary>
-    private IEnumerator SwipeToPage(int targetPageIndex)
+    private IEnumerator SwipeToPage(int dir)
     {
         isAnimating = true;
 
@@ -257,12 +321,45 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             UpdatePagePositions();
             yield return null;
         }
+        if (dir > 0)
+        {
+            var isOption = _CurPageData.IsOption();
+            var selectIndex = MangaContainer.Instance.SelectOptionIndex;
+            if (isOption && selectIndex != -1)
+            {
+                //选项已被禁用 ，去选项页对应的下一页
+                DoShowPage(_CurPageData.GetOptionSkip(selectIndex));
+            }
+            else
+            {
+                //去下一页
+                var optionEnd = _CurPageData.GetOptionEnd();
+                if (optionEnd > 0)
+                {
+                    DoShowPage(optionEnd);
+                }
+                else
+                {
+                    DoShowPage(curIndex + 1);
+                }
+            }
+        }
+        else
+        {
+            //去上一页
+            var optionBackList = _CurPageData.GetOptionBackList();
+            var selectIndex = MangaContainer.Instance.SelectOptionIndex;
+            if (optionBackList.Count >= 2 && selectIndex != -1)
+            {
 
-        // 切换到目标页面
-        DoShowPage(targetPageIndex);
+                DoShowPage(optionBackList[selectIndex]);
+            }
+            else
+            {
 
-        // 输出索引
-        Debug.Log($"翻页完成，当前页索引: {curIndex}");
+                DoShowPage(curIndex - 1);
+            }
+        }
 
         isAnimating = false;
     }
