@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
@@ -106,6 +104,10 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 {
                     Debug.Log("选项2回调: " + nextIndex);
                     DoShowPage(nextIndex);
+                }, (awardCount) =>
+                {
+                    Debug.Log("获得奖励: " + awardCount);
+                    MangaContainer.Instance.CurrNodeData.CurAwardCount += awardCount;
                 },
                 () =>
                 {
@@ -117,13 +119,13 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 // 显示上一页
                 string pageId = nodeId.GetPreId(curIndex);
                 MangaPageData pageData = MangaContainer.Instance.GetPageDataByID(pageId);
-                preItem.SetPageInfo(-1, pageData, null, null, null);
+                preItem.SetPageInfo(-1, pageData, null, null, null, null);
             }
             {
                 // 显示下一页
                 string pageId = nodeId.GetNextId(curIndex);
                 MangaPageData pageData = MangaContainer.Instance.GetPageDataByID(pageId);
-                nextItem.SetPageInfo(1, pageData, null, null, null);
+                nextItem.SetPageInfo(1, pageData, null, null, null, null);
             }
             // 重置位置
             ResetPagePositions();
@@ -306,6 +308,13 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     /// </summary>
     private IEnumerator SwipeToPage(int dir)
     {
+        //如果Item正在播放动画，则等待动画播放完成
+        if (currentItem.isAnimating)
+        {
+            Debug.Log("Item正在播放动画，等待动画播放完成");
+            StartCoroutine(SnapBackToCurrentPage());
+            yield break;
+        }
         isAnimating = true;
 
         float targetOffset = dragOffset > 0 ? screenWidth : -screenWidth;
@@ -360,8 +369,8 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 DoShowPage(curIndex - 1);
             }
         }
-
         isAnimating = false;
+
     }
 
     /// <summary>

@@ -11,7 +11,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_2",
@@ -25,7 +25,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_3",
@@ -39,7 +39,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 1
+    "AwardCount": 1
   },
   {
     "ID": "1_1_1_4",
@@ -53,7 +53,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_5",
@@ -67,7 +67,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_6",
@@ -87,7 +87,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_7",
@@ -104,7 +104,7 @@
     ],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_8",
@@ -118,7 +118,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 1
+    "AwardCount": 1
   },
   {
     "ID": "1_1_1_9",
@@ -132,7 +132,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_10",
@@ -146,7 +146,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_11",
@@ -160,7 +160,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_12",
@@ -177,7 +177,7 @@
     ],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_13",
@@ -191,7 +191,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_14",
@@ -205,7 +205,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 1
+    "AwardCount": 1
   },
   {
     "ID": "1_1_1_15",
@@ -219,7 +219,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_16",
@@ -233,7 +233,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_17",
@@ -250,7 +250,7 @@
     ],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_18",
@@ -264,7 +264,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_19",
@@ -278,7 +278,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_20",
@@ -292,7 +292,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_1_21",
@@ -306,7 +306,7 @@
     "OptionBack": [],
     "EndSkip": "Prefab/EndSkip_LuoJi",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_2_1",
@@ -320,7 +320,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_2_2",
@@ -334,7 +334,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_2_3",
@@ -348,7 +348,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_2_4",
@@ -362,7 +362,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 1,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_2_5",
@@ -376,7 +376,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_2_6",
@@ -390,7 +390,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_2_7",
@@ -404,7 +404,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_2_8",
@@ -418,7 +418,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_2_9",
@@ -432,7 +432,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_2_10",
@@ -446,7 +446,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_2_11",
@@ -460,7 +460,7 @@
     "OptionBack": [],
     "EndSkip": "Prefab/EndSkip_XiaoHuLi",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_3_1",
@@ -474,7 +474,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_3_2",
@@ -488,7 +488,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_3_3",
@@ -502,7 +502,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_3_4",
@@ -516,7 +516,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 1,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_3_5",
@@ -530,7 +530,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_3_6",
@@ -544,7 +544,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_3_7",
@@ -558,7 +558,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_3_8",
@@ -572,7 +572,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_3_9",
@@ -586,7 +586,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_3_10",
@@ -600,7 +600,7 @@
     "OptionBack": [],
     "EndSkip": "",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   },
   {
     "ID": "1_1_3_11",
@@ -614,6 +614,6 @@
     "OptionBack": [],
     "EndSkip": "Prefab/EndSkip_LuoJi",
     "BattleId": 0,
-    "TbRewardID": 0
+    "AwardCount": 0
   }
 ]

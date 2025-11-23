@@ -37,8 +37,10 @@ public class UC_PageItem : MonoBehaviour
     bool isShowEnd = false;
     bool isShowOption = false;
     bool isShowBattle = false;
+    public bool isAnimating = false;
     Action<int> onOption1Click;
     Action<int> onOption2Click;
+    Action<int> onDropAward;
     Action battleComplete;
     void Start()
     {
@@ -47,11 +49,14 @@ public class UC_PageItem : MonoBehaviour
     public void SetPageInfo(int typeIndex, MangaPageData pageData,
      Action<int> onOption1Click,
       Action<int> onOption2Click,
+      Action<int> onDropAward,
       Action battleComplete)
     {
+        isAnimating = false;
         _PageData = pageData;
         this.onOption1Click = onOption1Click;
         this.onOption2Click = onOption2Click;
+        this.onDropAward = onDropAward;
         this.battleComplete = battleComplete;
         var isShow = _PageData != null;
         gameObject.SetActive(isShow);
@@ -60,6 +65,7 @@ public class UC_PageItem : MonoBehaviour
             ShowTexture();
             if (typeIndex == 0)
             {
+                DropAward();
                 ShowOption();
                 ShowBattle();
                 ShowEnd();
@@ -69,6 +75,15 @@ public class UC_PageItem : MonoBehaviour
         }
         else
             this.StopAllCoroutines();
+    }
+
+    private void DropAward()
+    {
+        var awardCount = _PageData.Config.AwardCount;
+        if (awardCount > 0)
+        {
+            onDropAward?.Invoke(awardCount);
+        }
     }
 
     void ShowEnd()
@@ -82,8 +97,10 @@ public class UC_PageItem : MonoBehaviour
             butterflyGo.SetActive(true);
             endParent.gameObject.SetActive(false);
             this.StopAllCoroutines();
+            isAnimating = true;
             StartCoroutine(LocalPositionLerp(butterflyGo.transform, startPos.localPosition, endPos.localPosition, 2f, () =>
             {
+                isAnimating = false;
                 butterflyGo.SetActive(false);
                 endParent.gameObject.SetActive(true);
                 Debug.Log("蝴蝶飞完成");
@@ -97,6 +114,17 @@ public class UC_PageItem : MonoBehaviour
                     }
                     var go = GameObject.Instantiate(asset);
                     ResourcesManager.Instance.SetParent(go, endParent);
+                });
+                //获得奖励
+                ResourcesManager.Instance.LoadGameObject("Prefab/UI_Award", (GameObject asset) =>
+                {
+                    if (asset == null)
+                    {
+                        Debug.LogError($"UI_Award prefab is null: {endSkip}");
+                        return;
+                    }
+                    var go = GameObject.Instantiate(asset);
+                    ResourcesManager.Instance.SetParent(go, GameObject.Find("Canvas/Parent").transform);
                 });
             }));
 

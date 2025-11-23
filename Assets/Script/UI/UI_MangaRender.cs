@@ -33,6 +33,7 @@ public class UI_Manga : MonoBehaviour
     void InitNodeInfo()
     {
         CurrNodeData = MangaContainer.Instance.CurrNodeData;
+        CurrNodeData.CurAwardCount = 0;
         MangaContainer.Instance.SelectOptionIndex = -1;
         mangaPages.SetPageRange(CurrNodeData.StartIndex, CurrNodeData.EndIndex);
         sld.minValue = CurrNodeData.StartIndex;

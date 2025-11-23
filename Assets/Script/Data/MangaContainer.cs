@@ -126,6 +126,7 @@ public class MangaNodeData
     public Table_MangaNode Config { get; private set; }
     public int StartIndex { get; private set; }
     public int EndIndex { get; private set; }
+    public int CurAwardCount { get; set; }
     public MangaNodeData(Table_MangaNode config)
     {
         Config = config;

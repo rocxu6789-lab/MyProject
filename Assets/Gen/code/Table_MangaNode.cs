@@ -28,6 +28,7 @@ public sealed partial class Table_MangaNode : Luban.BeanBase
         { if(!_buf["TbRewardID"].IsNumber) { throw new SerializationException(); }  TbRewardID = _buf["TbRewardID"]; }
         { if(!_buf["MangaTicketNum"].IsNumber) { throw new SerializationException(); }  MangaTicketNum = _buf["MangaTicketNum"]; }
         { var __json0 = _buf["PageRange"]; if(!__json0.IsArray) { throw new SerializationException(); } PageRange = new System.Collections.Generic.List<int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { int __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  PageRange.Add(__v0); }   }
+        { if(!_buf["AllAwardCount"].IsNumber) { throw new SerializationException(); }  AllAwardCount = _buf["AllAwardCount"]; }
     }
 
     public static Table_MangaNode DeserializeTable_MangaNode(JSONNode _buf)
@@ -79,6 +80,10 @@ public sealed partial class Table_MangaNode : Luban.BeanBase
     /// 页面范围
     /// </summary>
     public readonly System.Collections.Generic.List<int> PageRange;
+    /// <summary>
+    /// 奖励数量
+    /// </summary>
+    public readonly int AllAwardCount;
    
     public const int __ID__ = 1756500069;
     public override int GetTypeId() => __ID__;
@@ -101,6 +106,7 @@ public sealed partial class Table_MangaNode : Luban.BeanBase
         + "TbRewardID:" + TbRewardID + ","
         + "MangaTicketNum:" + MangaTicketNum + ","
         + "PageRange:" + Luban.StringUtil.CollectionToString(PageRange) + ","
+        + "AllAwardCount:" + AllAwardCount + ","
         + "}";
     }
 }
