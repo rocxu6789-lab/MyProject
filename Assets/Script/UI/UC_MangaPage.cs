@@ -76,9 +76,9 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     void DoShowPage(int index)
     {
-        if (index >= startIndex && index < endIndex)
+        if (index >= startIndex && index <= endIndex)
         {
-            index = Mathf.Clamp(index, 0, endIndex - 1);
+            index = Mathf.Clamp(index, 0, endIndex);
             curIndex = index;
             Debug.Log($"显示页面，索引: {curIndex}");
 
@@ -88,13 +88,13 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
             // 显示上一页
             var preIndex = curIndex - 1;
-            var isShow = preIndex >= startIndex && preIndex < endIndex;
+            var isShow = preIndex >= startIndex && preIndex <= endIndex;
             preItem.gameObject.SetActive(isShow);
             if (isShow) preItem.ShowTexture(preIndex);
 
             // 显示下一页
             var nextIndex = curIndex + 1;
-            isShow = nextIndex >= startIndex && nextIndex < endIndex;
+            isShow = nextIndex >= startIndex && nextIndex <= endIndex;
             nextItem.gameObject.SetActive(isShow);
             if (isShow) nextItem.ShowTexture(nextIndex);
 
@@ -189,14 +189,14 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     private void UpdatePagePositions()
     {
         // 向右滑动（显示上一页）
-        if (dragOffset > 0 && curIndex > 0)
+        if (dragOffset > 0 && curIndex > startIndex)
         {
             curRect.anchoredPosition = currentPageInitialPos + new Vector2(dragOffset, 0);
             // 上一页从左侧滑入（初始位置在左侧一个屏幕宽度处）
             prevRect.anchoredPosition = prevPageInitialPos + new Vector2(dragOffset, 0);
         }
         // 向左滑动（显示下一页）
-        else if (dragOffset < 0 && curIndex < endIndex - 1)
+        else if (dragOffset < 0 && curIndex < endIndex)
         {
             curRect.anchoredPosition = currentPageInitialPos + new Vector2(dragOffset, 0);
             // 下一页从右侧滑入（初始位置在右侧一个屏幕宽度处）
@@ -214,7 +214,7 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     /// </summary>
     private void GoToPreviousPage()
     {
-        if (curIndex <= 0)
+        if (curIndex <= startIndex)
         {
             // 已经是第一页，回弹
             StartCoroutine(SnapBackToCurrentPage());
@@ -228,7 +228,7 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     /// </summary>
     private void GoToNextPage()
     {
-        if (curIndex >= endIndex - 1)
+        if (curIndex >= endIndex)
         {
             // 已经是最后一页，回弹
             StartCoroutine(SnapBackToCurrentPage());

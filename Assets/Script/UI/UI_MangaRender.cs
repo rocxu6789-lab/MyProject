@@ -25,20 +25,31 @@ public class UI_Manga : MonoBehaviour
         nextBtn.onClick.AddListener(OnNextBtnClick);
         sld.onValueChanged.AddListener(OnSliderValueChanged);
     }
+    MangaNodeData CurrNodeData;
     void Start()
     {
         sld.wholeNumbers = true;
-        var nodeData = MangaContainer.Instance.CurrNodeData;
-        var startIndex = nodeData.StartIndex;
-        var endIndex = nodeData.EndIndex;
-        sld.minValue = startIndex;
-        sld.maxValue = endIndex;
-        mangaPages.SetPageRange(startIndex, endIndex);
-        mangaPages.ShowPage(startIndex, (index) =>
+        CurrNodeData = MangaContainer.Instance.CurrNodeData;
+        mangaPages.SetPageRange(CurrNodeData.StartIndex, CurrNodeData.EndIndex);
+        sld.minValue = CurrNodeData.StartIndex;
+        sld.maxValue = CurrNodeData.EndIndex;
+        // mangaPages.ShowPage(CurrNodeData.StartIndex, (index) =>
+        // {
+        //     SetPageInfo(index);
+        // });
+    }
+    void SetPageInfo(int index)
+    {
+        sld.value = index;
+        proTxt.text = $"{index}/{CurrNodeData.EndIndex}";
+        infoTxt.text = $"第{index}页";
+    }
+    void OnSliderValueChanged(float value)
+    {
+        Debug.Log("OnSliderValueChanged: " + value);
+        mangaPages.ShowPage((int)value, (index) =>
         {
-            sld.value = index;
-            proTxt.text = $"{index}/{endIndex}";
-            infoTxt.text = $"第{index}页";
+            SetPageInfo(index);
         });
     }
 
@@ -54,10 +65,6 @@ public class UI_Manga : MonoBehaviour
     void OnNextBtnClick()
     {
         Debug.Log("OnNextBtnClick");
-    }
-    void OnSliderValueChanged(float value)
-    {
-        Debug.Log("OnSliderValueChanged: " + value);
     }
     void OnCloseBtnClick()
     {
