@@ -18,13 +18,13 @@ namespace Config
 /// </summary>
 public partial class MangaNode
 {
+    private readonly System.Collections.Generic.Dictionary<string, Table_MangaNode> _dataMap;
     private readonly System.Collections.Generic.List<Table_MangaNode> _dataList;
-
-    private System.Collections.Generic.Dictionary<string, Table_MangaNode> _dataMap_ID;
-
+    
     public MangaNode(JSONNode _buf)
     {
         int count = _buf.Count;
+        _dataMap = new System.Collections.Generic.Dictionary<string, Table_MangaNode>(count);
         _dataList = new System.Collections.Generic.List<Table_MangaNode>(count);
         
         foreach(JSONNode _ele in _buf.Children)
@@ -32,18 +32,17 @@ public partial class MangaNode
             Table_MangaNode _v;
             { if(!_ele.IsObject) { throw new SerializationException(); }  _v = global::Config.Table_MangaNode.DeserializeTable_MangaNode(_ele);  }
             _dataList.Add(_v);
-        }
-        _dataMap_ID = new System.Collections.Generic.Dictionary<string, Table_MangaNode>(count);
-        foreach(var _v in _dataList)
-        {
-            _dataMap_ID.Add(_v.ID, _v);
+            _dataMap.Add(_v.ID, _v);
         }
     }
 
+    public System.Collections.Generic.Dictionary<string, Table_MangaNode> DataMap => _dataMap;
     public System.Collections.Generic.List<Table_MangaNode> DataList => _dataList;
 
-    public Table_MangaNode GetByID(string key) => _dataMap_ID.TryGetValue(key, out Table_MangaNode __v) ? __v : default;
-    
+    public Table_MangaNode GetOrDefault(string key) => _dataMap.TryGetValue(key, out var v) ? v : default;
+    public Table_MangaNode Get(string key) => _dataMap[key];
+    public Table_MangaNode this[string key] => _dataMap[key];
+
     public void ResolveRef(Tables tables)
     {
         foreach(var _v in _dataList)
@@ -51,6 +50,7 @@ public partial class MangaNode
             _v.ResolveRef(tables);
         }
     }
+
 }
 
 }

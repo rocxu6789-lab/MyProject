@@ -76,7 +76,7 @@ public sealed partial class Table_MangaNode : Luban.BeanBase
     /// </summary>
     public readonly int MangaTicketNum;
     /// <summary>
-    /// 漫画的起始页,末尾页
+    /// 页面范围
     /// </summary>
     public readonly System.Collections.Generic.List<int> PageRange;
    

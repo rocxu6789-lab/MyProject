@@ -15,31 +15,25 @@ namespace Config
 public partial class Tables
 {
     /// <summary>
-    /// 漫画关卡表
-    /// </summary>
-    public MangaLevel MangaLevel {get; }
-    /// <summary>
     /// 漫画关卡-节点表
     /// </summary>
     public MangaNode MangaNode {get; }
     /// <summary>
     /// 漫画关卡-节点-页表
     /// </summary>
-    public MangaItem MangaItem {get; }
+    public MangaPage MangaPage {get; }
 
     public Tables(System.Func<string, JSONNode> loader)
     {
-        MangaLevel = new MangaLevel(loader("mangalevel"));
         MangaNode = new MangaNode(loader("manganode"));
-        MangaItem = new MangaItem(loader("mangaitem"));
+        MangaPage = new MangaPage(loader("mangapage"));
         ResolveRef();
     }
     
     private void ResolveRef()
     {
-        MangaLevel.ResolveRef(this);
         MangaNode.ResolveRef(this);
-        MangaItem.ResolveRef(this);
+        MangaPage.ResolveRef(this);
     }
 }
 
