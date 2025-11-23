@@ -73,7 +73,6 @@ public class MangaContainer
         var nextNodeData = GetNodeDataByID(nextNodeId);
         if (nextNodeData == null)
         {
-            Debug.LogError("下一个节点数据为空");
             return false;
         }
         CurrNodeData = nextNodeData;
@@ -92,7 +91,6 @@ public class MangaContainer
         var preNodeData = GetNodeDataByID(preNodeId);
         if (preNodeData == null)
         {
-            Debug.LogError("上一个节点数据为空");
             return false;
         }
         CurrNodeData = preNodeData;

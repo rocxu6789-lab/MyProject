@@ -29,27 +29,23 @@ public class UI_Manga : MonoBehaviour
     void Start()
     {
         sld.wholeNumbers = true;
+        InitPageInfo();
+    }
+    void InitPageInfo()
+    {
         CurrNodeData = MangaContainer.Instance.CurrNodeData;
         mangaPages.SetPageRange(CurrNodeData.StartIndex, CurrNodeData.EndIndex);
         sld.minValue = CurrNodeData.StartIndex;
         sld.maxValue = CurrNodeData.EndIndex;
-        // mangaPages.ShowPage(CurrNodeData.StartIndex, (index) =>
-        // {
-        //     SetPageInfo(index);
-        // });
-    }
-    void SetPageInfo(int index)
-    {
-        sld.value = index;
-        proTxt.text = $"{index}/{CurrNodeData.EndIndex}";
-        infoTxt.text = $"第{index}页";
     }
     void OnSliderValueChanged(float value)
     {
         Debug.Log("OnSliderValueChanged: " + value);
         mangaPages.ShowPage((int)value, (index) =>
         {
-            SetPageInfo(index);
+            sld.value = index;
+            proTxt.text = $"{index}/{CurrNodeData.EndIndex}";
+            infoTxt.text = $"第{index}页";
         });
     }
 
@@ -61,10 +57,28 @@ public class UI_Manga : MonoBehaviour
     void OnPreBtnClick()
     {
         Debug.Log("OnPreBtnClick");
+        if (MangaContainer.Instance.TryGoToPreNode())
+        {
+            InitPageInfo();
+            OnSliderValueChanged(CurrNodeData.StartIndex);
+        }
+        else
+        {
+            Debug.LogError("上一节点数据为空");
+        }
     }
     void OnNextBtnClick()
     {
         Debug.Log("OnNextBtnClick");
+        if (MangaContainer.Instance.TryGoToNextNode())
+        {
+            InitPageInfo();
+            OnSliderValueChanged(CurrNodeData.StartIndex);
+        }
+        else
+        { 
+            Debug.LogError("下一节点数据为空");
+        }
     }
     void OnCloseBtnClick()
     {
