@@ -1,27 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_MangaRender : MonoBehaviour
+public class UI_Manga : MonoBehaviour
 {
-    public Button ShowScreenBtn;
-    public Button HideScreenBtn;
+    public Button ClearScreenBtn;
     public GameObject contentPanel;
     public Button closeBtn;
     public Button preBtn;
     public Button nextBtn;
     public Slider sld;
-    public Text proTxt;
-    public Text infoTxt;
-    public MangaPage mangaPages;
+    public TextMeshProUGUI proTxt;
+    public TextMeshProUGUI infoTxt;
+    public UC_MangaPage mangaPages;
 
     void Awake()
     {
         contentPanel.SetActive(true);
         closeBtn.onClick.AddListener(OnCloseBtnClick);
-        HideScreenBtn.onClick.AddListener(OnHideScreenBtnClick);
-        ShowScreenBtn.onClick.AddListener(OnShowScreenBtnClick);
+        ClearScreenBtn.onClick.AddListener(OnClearScreenBtnClick);
         preBtn.onClick.AddListener(OnPreBtnClick);
         nextBtn.onClick.AddListener(OnNextBtnClick);
         sld.onValueChanged.AddListener(OnSliderValueChanged);
@@ -43,14 +42,9 @@ public class UI_MangaRender : MonoBehaviour
         });
     }
 
-    void OnHideScreenBtnClick()
+    void OnClearScreenBtnClick()
     {
         Debug.Log("OnClearScreenBtnClick");
-        contentPanel.SetActive(!contentPanel.activeSelf);
-    }
-    void OnShowScreenBtnClick()
-    {
-        Debug.Log("OnShowScreenBtnClick");
         contentPanel.SetActive(!contentPanel.activeSelf);
     }
     void OnPreBtnClick()

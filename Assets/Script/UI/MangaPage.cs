@@ -9,7 +9,7 @@ using System;
 /// 漫画阅读器
 /// 支持拖拽翻页功能
 /// </summary>
-public class MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public PageItem preItem;
     public PageItem currentItem;
