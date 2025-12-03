@@ -227,10 +227,9 @@ public class UC_PageItem : MonoBehaviour
             img.SetNativeSize();
             // 适配屏幕：保持长宽比不变，长边撑满屏幕
             var parentRect = GameObject.Find("Canvas/Parent").GetComponent<RectTransform>();
-            var screenWidth = parentRect.sizeDelta.x;
-            var screenHeight = parentRect.sizeDelta.y;
+            var screenWidth = parentRect.rect.width;
+            var screenHeight = parentRect.rect.height;
             var textureAspectRatio = (float)texture.width / texture.height;
-            
             float finalWidth, finalHeight;
             // 判断图片的长边
             if (texture.width > texture.height)

@@ -53,7 +53,7 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     void Awake()
     {
         var parentRect = GameObject.Find("Canvas/Parent").GetComponent<RectTransform>();
-        screenWidth = parentRect.sizeDelta.x;
+        screenWidth = parentRect.rect.width;
         curRect = currentItem.GetComponent<RectTransform>();
         currentPageInitialPos = curRect.anchoredPosition;
 

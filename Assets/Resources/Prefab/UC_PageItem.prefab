@@ -342,6 +342,7 @@ MonoBehaviour:
   endPos: {fileID: 3316073301145174610}
   endTipsGo1: {fileID: 2792605718834781513}
   endTipsGo2: {fileID: 2843526818030711180}
+  isAnimating: 0
 --- !u!1 &2098542176845315184
 GameObject:
   m_ObjectHideFlags: 0
@@ -2677,10 +2678,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 13657903989463961}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1024, y: 512}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7185231940574696197
 CanvasRenderer:
