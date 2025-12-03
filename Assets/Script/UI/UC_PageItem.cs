@@ -115,17 +115,21 @@ public class UC_PageItem : MonoBehaviour
                     var go = GameObject.Instantiate(asset);
                     ResourcesManager.Instance.SetParent(go, endParent);
                 });
-                //获得奖励
-                ResourcesManager.Instance.LoadGameObject("Prefab/UI_Award", (GameObject asset) =>
+                var curAwardCount = MangaContainer.Instance.CurrNodeData.CurAwardCount;
+                if (curAwardCount > 0)
                 {
-                    if (asset == null)
+                    //获得奖励
+                    ResourcesManager.Instance.LoadGameObject("Prefab/UI_Award", (GameObject asset) =>
                     {
-                        Debug.LogError($"UI_Award prefab is null: {endSkip}");
-                        return;
-                    }
-                    var go = GameObject.Instantiate(asset);
-                    ResourcesManager.Instance.SetParent(go, GameObject.Find("Canvas/Parent").transform);
-                });
+                        if (asset == null)
+                        {
+                            Debug.LogError($"UI_Award prefab is null: {endSkip}");
+                            return;
+                        }
+                        var go = GameObject.Instantiate(asset);
+                        ResourcesManager.Instance.SetParent(go, GameObject.Find("Canvas/Parent").transform);
+                    });
+                }
             }));
 
             if (MangaContainer.Instance.IsHaveNextNode(out MangaNodeData nodeData))
@@ -159,6 +163,7 @@ public class UC_PageItem : MonoBehaviour
             {
                 battleBtn.interactable = true;
                 Debug.Log("体力足够,开始战斗");
+                Debug.Log("点击后跳转外部功能界面，跳转战斗界面 battleId : " + battleId);
                 battleBtn.onClick.RemoveAllListeners();
                 battleBtn.onClick.AddListener(() => battleComplete?.Invoke());
             }
@@ -208,7 +213,39 @@ public class UC_PageItem : MonoBehaviour
     {
         ResourcesManager.Instance.LoadTexture($"{_PageData.Config.Texture}", (Texture texture) =>
         {
+            if (texture == null)
+            {
+                Debug.LogError($"Texture is null: {_PageData.Config.Texture}");
+                return;
+            }
+            if (img == null)
+            {
+                Debug.LogError($"img is null: {_PageData.Config.Texture}");
+                return;
+            }
             img.texture = texture;
+            img.SetNativeSize();
+            // 适配屏幕：保持长宽比不变，长边撑满屏幕
+            var parentRect = GameObject.Find("Canvas/Parent").GetComponent<RectTransform>();
+            var screenWidth = parentRect.sizeDelta.x;
+            var screenHeight = parentRect.sizeDelta.y;
+            var textureAspectRatio = (float)texture.width / texture.height;
+            
+            float finalWidth, finalHeight;
+            // 判断图片的长边
+            if (texture.width > texture.height)
+            {
+                // 横向图片：宽度是长边，撑满屏幕宽度
+                finalWidth = screenWidth;
+                finalHeight = screenWidth / textureAspectRatio;
+            }
+            else
+            {
+                // 纵向图片：高度是长边，撑满屏幕高度
+                finalHeight = screenHeight;
+                finalWidth = screenHeight * textureAspectRatio;
+            }
+            img.rectTransform.sizeDelta = new Vector2(finalWidth, finalHeight);
         });
 
     }

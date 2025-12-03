@@ -52,7 +52,8 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     MangaPageData _CurPageData;
     void Awake()
     {
-        screenWidth = Screen.width;
+        var parentRect = GameObject.Find("Canvas/Parent").GetComponent<RectTransform>();
+        screenWidth = parentRect.sizeDelta.x;
         curRect = currentItem.GetComponent<RectTransform>();
         currentPageInitialPos = curRect.anchoredPosition;
 
@@ -111,7 +112,7 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 },
                 () =>
                 {
-                    Debug.Log("战斗完成");
+                    Debug.Log("战斗完成，去下一页");
                     DoShowPage(curIndex + 1);
                 });
             }

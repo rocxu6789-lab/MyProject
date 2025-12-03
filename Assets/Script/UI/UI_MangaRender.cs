@@ -11,12 +11,14 @@ public class UI_Manga : MonoBehaviour
     public Button nextBtn;
     public Slider sld;
     public TextMeshProUGUI proTxt;
+    public TextMeshProUGUI proTxt2;
     public TextMeshProUGUI infoTxt;
     public UC_MangaPage mangaPages;
 
     void Awake()
     {
         contentPanel.SetActive(true);
+        proTxt2.gameObject.SetActive(false);
         closeBtn.onClick.AddListener(OnCloseBtnClick);
         ClearScreenBtn.onClick.AddListener(OnClearScreenBtnClick);
         preBtn.onClick.AddListener(OnPreBtnClick);
@@ -57,7 +59,12 @@ public class UI_Manga : MonoBehaviour
             Debug.Log("界面展示完成回调: " + index);
             sld.value = index;
             proTxt.text = $"{index}/{CurrNodeData.EndIndex}";
+            proTxt2.text = $"{index}/{CurrNodeData.EndIndex}";
             infoTxt.text = $"{CurrNodeData.Config.Name} \n 第{index}页";
+            if (contentPanel.activeSelf)
+            {
+                OnClearScreenBtnClick();
+            }
         }, () =>
         {
             Debug.Log("去上一节点");
@@ -74,6 +81,7 @@ public class UI_Manga : MonoBehaviour
     {
         Debug.Log("OnClearScreenBtnClick");
         contentPanel.SetActive(!contentPanel.activeSelf);
+        proTxt2.gameObject.SetActive(!contentPanel.activeSelf);
     }
     void OnPreBtnClick()
     {
@@ -86,7 +94,7 @@ public class UI_Manga : MonoBehaviour
         }
         else
         {
-            Debug.LogError("上一节点数据为空");
+            Debug.LogError("已经是第一章节了");
         }
     }
     void OnNextBtnClick()
@@ -100,7 +108,7 @@ public class UI_Manga : MonoBehaviour
         }
         else
         {
-            Debug.LogError("下一节点数据为空");
+            Debug.LogError("已经是最后一章节了");
         }
     }
     void OnCloseBtnClick()
