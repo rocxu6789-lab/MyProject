@@ -133,6 +133,20 @@ public class MangaNodeData
         StartIndex = config.PageRange[0];
         EndIndex = config.PageRange[1];
     }
+    string GetKey() => Config.ID + "_HaveReadIndex";
+    public int GetHaveReadIndex()
+    {
+        return PlayerPrefs.GetInt(GetKey(), 1);
+    }
+    public void SetHaveReadIndex(int index)
+    {
+        var tmp = PlayerPrefs.GetInt(GetKey(), 1);
+        if (index >= tmp)
+        {
+            PlayerPrefs.SetInt(GetKey(), index);
+            PlayerPrefs.Save();
+        }
+    }
 }
 public class MangaPageData
 {

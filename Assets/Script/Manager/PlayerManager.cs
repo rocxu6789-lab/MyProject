@@ -31,7 +31,7 @@ public class PlayerManager
     }
     public string GetPowerString(int consumePower)
     {
-        return $"{consumePower}/{_power}";
+        return $"<color=#ff5661>{consumePower}</color>/{_power}";
     }
     public int GetPower()
     {

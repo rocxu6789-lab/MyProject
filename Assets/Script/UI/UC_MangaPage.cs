@@ -138,7 +138,7 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             Debug.Log($"页面索引超出当前节点范围: {index} startIndex: {startIndex} endIndex: {endIndex}，尝试去上一节点或下一节点");
             if (MangaContainer.Instance.IsGuide)
             {
-                Debug.Log("引导模式，回弹到当前页");
+                Debug.LogError("勾选新手玩家时，漫画尾页不能继续翻下一节");
                 StartCoroutine(SnapBackToCurrentPage());
                 return;
             }
@@ -271,6 +271,16 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         }
         else
         {
+            if (dragOffset > 0 && !MangaContainer.Instance.IsHavePreNode(out var _))
+            {
+                // Debug.LogError("第一页无对应上一节时，漫画无法往前滑");
+                return;
+            }
+            if (dragOffset < 0 && (!MangaContainer.Instance.IsHaveNextNode(out var _) || MangaContainer.Instance.IsGuide))
+            {
+                // Debug.LogError("最后一页无对应下一节时，漫画无法往后滑"); 
+                return;
+            }
             // 拖拽方向无效或已到边界，只移动当前页
             curRect.anchoredPosition = currentPageInitialPos + new Vector2(dragOffset, 0);
         }
@@ -287,6 +297,11 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         //     StartCoroutine(SnapBackToCurrentPage());
         //     return;
         // }
+        if (curIndex <= startIndex && !MangaContainer.Instance.IsHavePreNode(out var _))
+        {
+            Debug.LogError("第一页无对应上一节时，漫画无法往前滑");
+            return;
+        }
         StartCoroutine(SwipeToPage(-1));
     }
 
@@ -301,6 +316,11 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         //     StartCoroutine(SnapBackToCurrentPage());
         //     return;
         // }
+        if (curIndex >= endIndex && !MangaContainer.Instance.IsHaveNextNode(out var _))
+        {
+            Debug.LogError("最后一页无对应下一节时，漫画无法往后滑");
+            return;
+        }
         StartCoroutine(SwipeToPage(1));
     }
 

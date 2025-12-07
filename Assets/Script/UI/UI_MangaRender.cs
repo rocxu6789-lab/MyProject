@@ -38,8 +38,8 @@ public class UI_Manga : MonoBehaviour
         CurrNodeData.CurAwardCount = 0;
         MangaContainer.Instance.SelectOptionIndex = -1;
         mangaPages.SetPageRange(CurrNodeData.StartIndex, CurrNodeData.EndIndex);
-        sld.minValue = CurrNodeData.StartIndex;
-        sld.maxValue = CurrNodeData.EndIndex;
+        sld.minValue = 0;
+        sld.maxValue = CurrNodeData.GetHaveReadIndex(); 
         sld.value = CurrNodeData.StartIndex;
         curIndex = -1;
         var consumePower = MangaContainer.Instance.GetConsumePower();
@@ -55,11 +55,14 @@ public class UI_Manga : MonoBehaviour
         mangaPages.ShowPage(intValue, (index) =>
         {
             curIndex = index;
+            CurrNodeData.SetHaveReadIndex(index);
             //界面展示完成回调
             Debug.Log("界面展示完成回调: " + index);
+            sld.minValue = 0;
+            sld.maxValue = CurrNodeData.GetHaveReadIndex();
             sld.value = index;
-            proTxt.text = $"{index}/{CurrNodeData.EndIndex}";
-            proTxt2.text = $"{index}/{CurrNodeData.EndIndex}";
+            proTxt.text = $"{index}/{CurrNodeData.GetHaveReadIndex()}";
+            proTxt2.text = $"{index}/{CurrNodeData.GetHaveReadIndex()}";
             infoTxt.text = $"{CurrNodeData.Config.Name} \n 第{index}页";
             if (contentPanel.activeSelf)
             {
