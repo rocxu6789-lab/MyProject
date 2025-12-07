@@ -92,6 +92,11 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 // 显示当前页
                 string pageId = nodeId.GetPageId(curIndex);
                 _CurPageData = MangaContainer.Instance.GetPageDataByID(pageId);
+                if (_CurPageData == null)
+                {
+                    Debug.LogError($"页面数据为空: {pageId}");
+                    return;
+                }
                 bool isOption = _CurPageData.IsOption(); // 如果当前页是选项页，则禁止拖拽
                 bool isBattle = _CurPageData.IsBattle();
                 _isBlockDrag = (isOption || isBattle) && MangaContainer.Instance.SelectOptionIndex == -1;
