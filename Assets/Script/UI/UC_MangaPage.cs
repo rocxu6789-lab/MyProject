@@ -117,8 +117,7 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 },
                 () =>
                 {
-                    Debug.Log("战斗完成，去下一页");
-                    DoShowPage(curIndex + 1);
+                    Debug.Log("战斗完成，TODO");
                 });
             }
             {

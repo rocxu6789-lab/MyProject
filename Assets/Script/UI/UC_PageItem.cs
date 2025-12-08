@@ -164,7 +164,7 @@ public class UC_PageItem : MonoBehaviour
         {
             int battleId = _PageData.GetBattleId();
             battleIdTxt.text = $"战斗ID: {battleId}";
-            battlePowerTxt.text = $"体力: {PlayerManager.Instance.GetPowerString(MangaContainer.Instance.GetConsumePower())}";
+            battlePowerTxt.text = $"{PlayerManager.Instance.GetPowerString(MangaContainer.Instance.GetConsumePower())}";
             if (PlayerManager.Instance.IsEnoughPower(battleId))
             {
                 battleBtn.interactable = true;
