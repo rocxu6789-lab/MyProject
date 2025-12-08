@@ -230,20 +230,8 @@ public class UC_PageItem : MonoBehaviour
             var screenWidth = parentRect.rect.width;
             var screenHeight = parentRect.rect.height;
             var textureAspectRatio = (float)texture.width / texture.height;
-            float finalWidth, finalHeight;
-            // 判断图片的长边
-            if (texture.width > texture.height)
-            {
-                // 横向图片：宽度是长边，撑满屏幕宽度
-                finalWidth = screenWidth;
-                finalHeight = screenWidth / textureAspectRatio;
-            }
-            else
-            {
-                // 纵向图片：高度是长边，撑满屏幕高度
-                finalHeight = screenHeight;
-                finalWidth = screenHeight * textureAspectRatio;
-            }
+            float finalWidth = screenHeight * textureAspectRatio;
+            float finalHeight = screenHeight;
             img.rectTransform.sizeDelta = new Vector2(finalWidth, finalHeight);
         });
 
