@@ -187,6 +187,7 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         prevRect.anchoredPosition = prevPageInitialPos;
         nextRect.anchoredPosition = nextPageInitialPos;
         dragOffset = 0f;
+        currentItem.ShowEndTips(false);
     }
 
     /// <summary>
@@ -288,6 +289,7 @@ public class UC_MangaPage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             }
             // 拖拽方向无效或已到边界，只移动当前页
             curRect.anchoredPosition = currentPageInitialPos + new Vector2(dragOffset, 0);
+            currentItem.ShowEndTips(true);
         }
     }
 

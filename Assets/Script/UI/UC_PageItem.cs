@@ -77,7 +77,22 @@ public class UC_PageItem : MonoBehaviour
             this.StopAllCoroutines();
     }
 
-    private void DropAward()
+    public void ShowEndTips(bool isShow)
+    {
+        var isHaveNextNode = MangaContainer.Instance.IsHaveNextNode(out MangaNodeData nodeData);
+        if (isHaveNextNode)
+        {
+            endTipsGo1.SetActive(true && isShow);
+            endTipsGo2.SetActive(false);
+        }
+        else
+        {
+            endTipsGo1.SetActive(false);
+            endTipsGo2.SetActive(true && isShow);
+        }
+    }
+
+    void DropAward()
     {
         var awardCount = _PageData.Config.AwardCount;
         if (awardCount > 0)
@@ -132,16 +147,7 @@ public class UC_PageItem : MonoBehaviour
                 }
             }));
 
-            if (MangaContainer.Instance.IsHaveNextNode(out MangaNodeData nodeData))
-            {
-                endTipsGo1.SetActive(true);
-                endTipsGo2.SetActive(false);
-            }
-            else
-            {
-                endTipsGo1.SetActive(false);
-                endTipsGo2.SetActive(true);
-            }
+
         }
         else
         {
