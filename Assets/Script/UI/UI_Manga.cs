@@ -39,12 +39,14 @@ public class UI_Manga : MonoBehaviour
         MangaContainer.Instance.SelectOptionIndex = -1;
         mangaPages.SetPageRange(CurrNodeData.StartIndex, CurrNodeData.EndIndex);
         sld.minValue = 0;
-        sld.maxValue = CurrNodeData.GetHaveReadIndex(); 
-        sld.value = CurrNodeData.StartIndex;
+        sld.maxValue = CurrNodeData.GetHaveReadIndex();
+        sld.value = MangaContainer.Instance.InitStartIndex > 0 ? MangaContainer.Instance.InitStartIndex : CurrNodeData.StartIndex;
         curIndex = -1;
         var consumePower = MangaContainer.Instance.GetConsumePower();
         PlayerManager.Instance.UsePower(consumePower);
         Debug.Log($"切换节点: {CurrNodeData.Config.Name} 消耗体力: {consumePower} 当前体力: {PlayerManager.Instance.GetPower()}");
+        MangaContainer.Instance.InitStartIndex = 0;
+        MangaContainer.Instance.InitNodeId = "1_1_1";
     }
     void OnSliderValueChanged(float value)
     {
@@ -117,6 +119,8 @@ public class UI_Manga : MonoBehaviour
     void OnCloseBtnClick()
     {
         MangaContainer.Instance.SelectOptionIndex = -1;
+        MangaContainer.Instance.InitStartIndex = 0;
+        MangaContainer.Instance.InitNodeId = "1_1_1";
         Destroy(gameObject);
     }
 }

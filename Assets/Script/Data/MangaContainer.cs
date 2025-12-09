@@ -27,6 +27,7 @@ public class MangaContainer
     #region 初始化
     public bool IsGuide = false;
     public string InitNodeId = "1_1_1";//初始节点id
+    public int InitStartIndex = 1;//初始开始页
     public void Init()
     {
         InitAllNodeData();
@@ -133,6 +134,7 @@ public class MangaNodeData
         StartIndex = config.PageRange[0];
         EndIndex = config.PageRange[1];
     }
+
     string GetKey() => Config.ID + "_HaveReadIndex";
     public int GetHaveReadIndex()
     {

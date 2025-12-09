@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Enter : MonoBehaviour
 {
     public Button enterBtn;
+    public Button skipBtn;
     public Toggle toggle;
     public Transform parent;
     void Awake()
@@ -17,6 +18,7 @@ public class Enter : MonoBehaviour
     void Start()
     {
         enterBtn.onClick.AddListener(OnEnterBtnClick);
+        skipBtn.onClick.AddListener(OnSkipBtnClick);
         toggle.onValueChanged.AddListener(OnToggleValueChanged);
     }
 
@@ -25,13 +27,29 @@ public class Enter : MonoBehaviour
         Debug.Log("OnToggleValueChanged: " + isOn);
         MangaContainer.Instance.IsGuide = isOn;
     }
-
-    void OnEnterBtnClick()
+    void OnSkipBtnClick()
     {
+        Debug.Log("OnSkipBtnClick");
+        //set data
+        MangaContainer.Instance.InitNodeId = "1_1_2";//设置初始节点id
+        MangaContainer.Instance.InitStartIndex = 2;//设置初始开始页
         var nodeId = MangaContainer.Instance.InitNodeId;
         var nodeData = MangaContainer.Instance.GetNodeDataByID(nodeId);
         MangaContainer.Instance.CurrNodeData = nodeData;
+        DoOpenManga();
+    }
+
+    void OnEnterBtnClick()
+    {
         Debug.Log("OnEnterBtnClick");
+        var nodeId = MangaContainer.Instance.InitNodeId;
+        var nodeData = MangaContainer.Instance.GetNodeDataByID(nodeId);
+        MangaContainer.Instance.CurrNodeData = nodeData;
+        DoOpenManga();
+    }
+    void DoOpenManga()
+    {
+
         ResourcesManager.Instance.LoadGameObject("Prefab/UI_Manga", (GameObject asset) =>
         {
             if (asset == null)
