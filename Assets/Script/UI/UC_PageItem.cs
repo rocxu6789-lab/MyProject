@@ -217,7 +217,6 @@ public class UC_PageItem : MonoBehaviour
     }
     void ShowTexture()
     {
-        img.enabled = false;
         ResourcesManager.Instance.LoadTexture($"{_PageData.Config.Texture}", (Texture texture) =>
         {
             if (texture == null)
@@ -230,7 +229,6 @@ public class UC_PageItem : MonoBehaviour
                 Debug.LogError($"img is null: {_PageData.Config.Texture}");
                 return;
             }
-            img.enabled = true;
             img.texture = texture;
             img.SetNativeSize();
             // 适配屏幕：保持长宽比不变，长边撑满屏幕

@@ -20,6 +20,7 @@ public class ResourcesManager
     }
     #endregion
 
+    private Dictionary<string, Texture> _spriteCache = new();
     public void LoadSprite(string path, Action<Sprite> callback)
     {
         ResourceRequest request = Resources.LoadAsync<Sprite>(path);
@@ -30,11 +31,25 @@ public class ResourcesManager
     }
     public void LoadTexture(string path, Action<Texture> callback)
     {
-        ResourceRequest request = Resources.LoadAsync<Texture>(path);
-        request.completed += (AsyncOperation operation) =>
+        if (_spriteCache.TryGetValue(path, out Texture texture))
         {
-            callback(request.asset as Texture);
-        };
+            callback(texture);
+        }
+        else
+        {
+            ResourceRequest request = Resources.LoadAsync<Texture>(path);
+            request.completed += (AsyncOperation operation) =>
+            {
+                if (request.asset == null)
+                {
+                    Debug.LogError($"Texture is null: {path}");
+                    return;
+                }
+                Texture texture = request.asset as Texture;
+                _spriteCache.Add(path, texture);
+                callback(texture);
+            };
+        }
     }
 
     public void LoadGameObject(string path, Action<GameObject> callback)
